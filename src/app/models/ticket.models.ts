@@ -1,18 +1,23 @@
-export interface CreateTicketRequest {
-    phoneNumber: string;
-    governorate: string;
-    city: string;
-    district: string;
-  }
-  
-  export interface GetTicketResponse {
+export interface Ticket {
     id: number;
-    creationDate: string;
     phoneNumber: string;
     governorate: string;
     city: string;
     district: string;
+    creationDate: Date;
     isHandled: boolean;
     color: string;
+  }
+  
+  export interface PaginatedTicketsResponse {
+    tickets: Ticket[];
+    totalCount: number;
+  }
+  
+  export interface CreateTicketRequest {
+    phoneNumber: string;
+    governorate: string;
+    city: string;
+    district: string;
   }
   

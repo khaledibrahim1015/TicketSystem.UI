@@ -1,1 +1,19 @@
-<p>ticket-list works!</p>
+<div class="container mt-5">
+    <h2>Ticket List</h2>
+    <div *ngFor="let ticket of tickets" class="card mb-3" [style.backgroundColor]="ticket.color">
+      <div class="card-body">
+        <h5 class="card-title">Ticket #{{ ticket.id }}</h5>
+        <p class="card-text">Phone Number: {{ ticket.phoneNumber }}</p>
+        <p class="card-text">Governorate: {{ ticket.governorate }}</p>
+        <p class="card-text">City: {{ ticket.city }}</p>
+        <p class="card-text">District: {{ ticket.district }}</p>
+        <p class="card-text">Created At: {{ ticket.creationDate | date:'medium' }}</p>
+        <button class="btn btn-primary" (click)="handleTicket(ticket.id)" [disabled]="ticket.isHandled">Handle</button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between mt-3">
+      <button class="btn btn-secondary" (click)="previousPage()" [disabled]="pageNumber === 1">Previous</button>
+      <button class="btn btn-secondary" (click)="nextPage()">Next</button>
+    </div>
+  </div>
+  

@@ -1,1 +1,27 @@
-<p>ticket-create works!</p>
+<!-- src/app/ticket-create/ticket-create.component.html -->
+<form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="container mt-5">
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" formControlName="phoneNumber" class="form-control" placeholder="Enter phone number">
+    </div>
+    <div class="form-group">
+      <label for="governorate">Governorate</label>
+      <select id="governorate" formControlName="governorate" class="form-control">
+        <option *ngFor="let governorate of governorates">{{ governorate }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <select id="city" formControlName="city" class="form-control">
+        <option *ngFor="let city of cities">{{ city }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="district">District</label>
+      <select id="district" formControlName="district" class="form-control">
+        <option *ngFor="let district of districts">{{ district }}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Create Ticket</button>
+  </form>
+  
