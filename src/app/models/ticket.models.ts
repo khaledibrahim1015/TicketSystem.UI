@@ -10,8 +10,8 @@ export interface Ticket {
   }
   
   export interface PaginatedTicketsResponse {
-    tickets: Ticket[];
     totalCount: number;
+    items: Ticket[];
   }
   
   export interface CreateTicketRequest {

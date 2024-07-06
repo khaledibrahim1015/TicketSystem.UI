@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../services/ticket.service';
-import { Ticket } from '../models/ticket.models';
+import { Ticket, PaginatedTicketsResponse } from '../models/ticket.models';
 
 @Component({
   selector: 'app-ticket-list',
@@ -9,20 +9,27 @@ import { Ticket } from '../models/ticket.models';
 })
 export class TicketListComponent implements OnInit {
   tickets: Ticket[] = [];
-  pageNumber: number = 1;
-  pageSize: number = 5;
-  totalTickets: number = 0;
+  pageNumber = 1;
+  pageSize = 5;
+  totalTickets = 0;
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
     this.loadTickets();
   }
 
   loadTickets(): void {
-    this.ticketService.getTickets(this.pageNumber, this.pageSize).subscribe(response => {
-      this.tickets = response.tickets;
-      this.totalTickets = response.totalCount;
+    this.ticketService.getTickets(this.pageNumber, this.pageSize).subscribe({
+      next: (response: PaginatedTicketsResponse) => {
+        console.log('Response received:', response);
+        this.tickets = response.items;
+        this.totalTickets = response.totalCount;
+        console.log('Total tickets:', this.totalTickets); // Ensure this prints correctly
+      },
+      error: (error) => {
+        console.error('Error loading tickets:', error);
+      }
     });
   }
 
@@ -40,7 +47,8 @@ export class TicketListComponent implements OnInit {
   }
 
   nextPage(): void {
-    if (this.pageNumber * this.pageSize < this.totalTickets) {
+    const totalPages = Math.ceil(this.totalTickets / this.pageSize);
+    if (this.pageNumber < totalPages) {
       this.pageNumber++;
       this.loadTickets();
     }
