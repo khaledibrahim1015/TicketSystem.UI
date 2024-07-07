@@ -1,6 +1,3 @@
-
-
-
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
@@ -9,14 +6,14 @@ import { Observable, of } from 'rxjs';
 })
 export class StaticDataService {
   getGovernorates(): Observable<string[]> {
-    return of(['Governorate1', 'Governorate2', 'Governorate3']);
+    return of(['Select Governorate', 'Governorate1', 'Governorate2', 'Governorate3']);
   }
 
   getCities(): Observable<string[]> {
-    return of(['City1', 'City2', 'City3']);
+    return of(['Select City', 'City1', 'City2', 'City3']);
   }
 
   getDistricts(): Observable<string[]> {
-    return of(['District1', 'District2', 'District3']);
+    return of(['Select District', 'District1', 'District2', 'District3']);
   }
 }

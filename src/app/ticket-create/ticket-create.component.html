@@ -1,27 +1,38 @@
 <!-- src/app/ticket-create/ticket-create.component.html -->
 <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="container mt-5">
-    <div class="form-group">
-      <label for="phoneNumber">Phone Number</label>
-      <input id="phoneNumber" formControlName="phoneNumber" class="form-control" placeholder="Enter phone number">
+  <div class="form-group">
+    <label for="phoneNumber">Phone Number</label>
+    <input id="phoneNumber" formControlName="phoneNumber" class="form-control" placeholder="Enter phone number">
+    <div *ngIf="ticketForm.get('phoneNumber')!.invalid && (ticketForm.get('phoneNumber')!.dirty || ticketForm.get('phoneNumber')!.touched)" class="text-danger">
+      Phone number is required.
     </div>
-    <div class="form-group">
-      <label for="governorate">Governorate</label>
-      <select id="governorate" formControlName="governorate" class="form-control">
-        <option *ngFor="let governorate of governorates">{{ governorate }}</option>
-      </select>
+  </div>
+  <div class="form-group">
+    <label for="governorate">Governorate</label>
+    <select id="governorate" formControlName="governorate" class="form-control">
+      <option *ngFor="let governorate of governorates" [value]="governorate">{{ governorate }}</option>
+    </select>
+    <div *ngIf="ticketForm.get('governorate')!.invalid && (ticketForm.get('governorate')!.dirty || ticketForm.get('governorate')!.touched)" class="text-danger">
+      Governorate is required.
     </div>
-    <div class="form-group">
-      <label for="city">City</label>
-      <select id="city" formControlName="city" class="form-control">
-        <option *ngFor="let city of cities">{{ city }}</option>
-      </select>
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <select id="city" formControlName="city" class="form-control">
+      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+    </select>
+    <div *ngIf="ticketForm.get('city')!.invalid && (ticketForm.get('city')!.dirty || ticketForm.get('city')!.touched)" class="text-danger">
+      City is required.
     </div>
-    <div class="form-group">
-      <label for="district">District</label>
-      <select id="district" formControlName="district" class="form-control">
-        <option *ngFor="let district of districts">{{ district }}</option>
-      </select>
+  </div>
+  <div class="form-group">
+    <label for="district">District</label>
+    <select id="district" formControlName="district" class="form-control">
+      <option *ngFor="let district of districts" [value]="district">{{ district }}</option>
+    </select>
+    <div *ngIf="ticketForm.get('district')!.invalid && (ticketForm.get('district')!.dirty || ticketForm.get('district')!.touched)" class="text-danger">
+      District is required.
     </div>
-    <button type="submit" class="btn btn-primary mt-3">Create Ticket</button>
-  </form>
-  
+  </div>
+  <button type="submit" class="btn btn-primary mt-3" [disabled]="!ticketForm.valid">Create Ticket</button>
+</form>

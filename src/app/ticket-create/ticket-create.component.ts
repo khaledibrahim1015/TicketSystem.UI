@@ -1,3 +1,4 @@
+// src/app/ticket-create/ticket-create.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StaticDataService } from '../services/static-data.service';
@@ -9,7 +10,6 @@ import { CreateTicketRequest } from '../models/ticket.models';
   templateUrl: './ticket-create.component.html',
   styleUrls: ['./ticket-create.component.css']
 })
-
 export class TicketCreateComponent implements OnInit {
   ticketForm!: FormGroup;
   governorates: string[] = [];
@@ -25,9 +25,9 @@ export class TicketCreateComponent implements OnInit {
   ngOnInit(): void {
     this.ticketForm = this.fb.group({
       phoneNumber: ['', Validators.required],
-      governorate: ['', Validators.required],
-      city: ['', Validators.required],
-      district: ['', Validators.required]
+      governorate: ['Select Governorate', Validators.required],
+      city: ['Select City', Validators.required],
+      district: ['Select District', Validators.required]
     });
 
     this.staticDataService.getGovernorates().subscribe(data => this.governorates = data);
@@ -38,7 +38,14 @@ export class TicketCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.ticketForm.valid) {
       const request: CreateTicketRequest = this.ticketForm.value;
-      this.ticketService.createTicket(request).subscribe();
+      this.ticketService.createTicket(request).subscribe(() => {
+        this.ticketForm.reset({
+          phoneNumber: '',
+          governorate: 'Select Governorate',
+          city: 'Select City',
+          district: 'Select District'
+        });
+      });
     }
   }
 }

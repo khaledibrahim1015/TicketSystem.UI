@@ -1,26 +1,26 @@
+// src/app/services/ticket.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { PaginatedTicketsResponse, CreateTicketRequest, Ticket } from '../models/ticket.models';
-import { map } from 'rxjs/operators'; // Import map operator
+import { Observable, tap } from 'rxjs';
+import { PaginatedTicketsResponse, CreateTicketRequest } from '../models/ticket.models';
+import { EventService } from './event.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
-  private apiUrl = 'http://localhost:49051/api/tickets'; 
+  private apiUrl = 'http://localhost:49051/api/tickets';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private eventService: EventService) { }
 
   createTicket(request: CreateTicketRequest): Observable<any> {
-    return this.http.post(this.apiUrl, request);
+    return this.http.post(this.apiUrl, request).pipe(
+      tap(() => this.eventService.announceTicketCreated())
+    );
   }
 
   getTickets(pageNumber: number, pageSize: number): Observable<PaginatedTicketsResponse> {
-    return this.http.get<PaginatedTicketsResponse>(`${this.apiUrl}/paginated?pageNumber=${pageNumber}&pageSize=${pageSize}`)
-      .pipe(
-        map(response => response) 
-      );
+    return this.http.get<PaginatedTicketsResponse>(`${this.apiUrl}/paginated?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   handleTicket(id: number): Observable<any> {
